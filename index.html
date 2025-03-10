@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Google Maps Explorer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="js/env.js"></script>
+    <script src="js/map.js" defer></script>
+    <script src="js/app.js" defer></script>
+    <script src="js/infowindow.js" defer></script>
+    <script src="js/geocode.js" defer></script>
+    <script src="js/geolocation.js" defer></script>
+    <script src="js/markers.js" defer></script>
+    <script src="js/routes.js" defer></script>
+    <script>
+    loadGoogleMapsScript();
+    </script>
+</head>
+<body>
+  <!-- Search bar (always visible) -->
+<div class="absolute top-4 left-4 z-10 bg-white p-4 rounded-lg shadow-lg flex flex-col gap-4">
+    <div class="flex">
+        <input id="latlng-input" type="text" 
+               placeholder="Enter coordinates, e.g. 51.9390, 15.5060"
+               class="border border-gray-300 rounded-md p-2 flex-1 focus:ring-2 focus:ring-blue-500 focus:outline-none">
+        <button id="geocode-button" 
+                class="bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600 transition ml-2">
+            Find address
+        </button>
+    </div>
+</div>
+
+<button id="toggle-style-button" 
+        class="absolute top-2.5 right-[230px] z-10 bg-gray-800 text-white p-2 rounded-md hover:bg-gray-700 transition">
+    🌙/☀️
+</button>
+
+
+<!-- Burger Menu -->
+<button id="burger-button" 
+        class="absolute top-4 left-4 mt-20 z-10 bg-blue-500 text-white p-2 rounded-md hover:bg-gray-700 transition">
+    ☰ Menu
+</button>
+
+<!-- Collapsible menu panel -->
+<div id="burger-menu" class="absolute top-24 left-4 z-10 bg-white p-4 rounded-lg shadow-lg flex flex-col gap-4 hidden">
+    <!-- Close button -->
+    <button id="close-burger-menu" 
+            class="mx-auto text-gray-600 hover:text-gray-800 text-2xl font-bold transition">
+        ⬅️
+    </button>
+
+
+    <!-- Action buttons -->
+    <button id="location-button" class="bg-green-600 text-white px-2 py-1 text-sm rounded-md hover:bg-green-700 transition">
+        Show my location
+    </button>
+    <button id="export-markers-button" class="bg-yellow-500 text-white px-2 py-1 text-sm rounded-md hover:bg-yellow-600 transition">
+        Export markers
+    </button>
+    <button id="import-markers-button" class="bg-indigo-500 text-white px-2 py-1 text-sm rounded-md hover:bg-indigo-600 transition">
+        Import markers
+    </button>
+    <input id="import-markers-input" type="file" accept=".json" class="hidden" />
+
+    <button id="select-start-button" class="bg-blue-500 text-white px-2 py-1 text-sm rounded hover:bg-blue-600 transition">
+        Set start point
+    </button>
+    <button id="select-end-button" class="bg-green-500 text-white px-2 py-1 text-sm rounded-md hover:bg-green-600 transition">
+        Set end point
+    </button>
+    <button id="add-waypoint-button" class="bg-purple-500 text-white px-2 py-1 text-sm rounded-md hover:bg-purple-600 transition">
+        Add waypoint
+    </button>
+    <button id="route-between-button" class="bg-orange-500 text-white px-2 py-1 text-sm rounded-md hover:bg-orange-600 transition">
+        Plan route
+    </button>
+    <button id="clear-route-button" class="bg-red-500 text-white px-2 py-1 text-sm rounded-md hover:bg-red-600 transition">
+        Clear route
+    </button>
+
+    <button id="export-routes-button" class="bg-yellow-500 text-white px-2 py-1 text-sm rounded-md hover:bg-yellow-600 transition">
+        Export routes
+    </button>
+    <button id="import-routes-button" class="bg-indigo-500 text-white px-2 py-1 text-sm rounded-md hover:bg-indigo-600 transition">
+        Import routes
+    </button>
+    <input id="import-routes-input" type="file" accept=".json" class="hidden" />
+</div>
+
+
+    
+
+    <div class="flex h-screen w-full">
+        <div id="map" class="flex-1 h-full"></div>
+    </div>
+
+
+    <div id="marker-list-box"
+     class="fixed bottom-40 right-4 z-50 bg-white text-gray-800 px-4 py-2 rounded-lg shadow-lg text-sm font-medium max-h-60 overflow-y-auto w-72">
+    <div class="font-semibold mb-1">Markers:</div>
+    <ul id="marker-list" class="list-disc list-inside space-y-1"></ul>
+</div>
+
+
+<div id="marker-counter-container"
+     class="fixed bottom-4 left-4 z-50 bg-white text-gray-800 px-4 py-2 rounded-lg shadow-lg text-sm font-semibold flex items-center gap-4">
+    
+    <span id="marker-counter">Markers: 0</span>
+
+    <button id="clear-markers-button"
+            class="text-red-600 hover:text-red-800 text-sm font-semibold transition">
+        🧹 Clear all
+    </button>
+</div>
+
+
+</body>
+</html>
